@@ -4,7 +4,7 @@ const Buesiness = require('./businesses');
 
 // Creating our User model
 module.exports = function(sequelize, DataTypes) {
-  const User = sequelize.define('User', {
+  const User = sequelize.define('user', {
     // The email cannot be null, and must be a proper email before creation
     username: {
       type: DataTypes.STRING,
