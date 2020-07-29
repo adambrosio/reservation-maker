@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const Business = require('./businesses');
 
-module.exports = function(sequeslize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
   const Business_Entity = sequelize.define('buesiness_entity', {
     business_entity_name: {
       type: DataTypes.STRING(50),
