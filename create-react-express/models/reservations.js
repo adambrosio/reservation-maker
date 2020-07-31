@@ -3,7 +3,7 @@ const Business_Entity = require('./business_entities');
 const User = require('./users');
 
 module.exports = function(sequelize, DataTypes) {
-  const Reservation = sequelize.define('buesiness_entity', {
+  const Reservation = sequelize.define('Reservation', {
     reservation_date: {
       type: DataTypes.DATE,
       allowNull: false
@@ -18,9 +18,11 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-}
+  Reservation.associate = models => {
+    Reservation.hasOne(models.User, { foreignKey: "id", as: 'user_id', through: models.User, onDelete: 'CASCADE' });
+    Reservation.hasOne(models.Business_Entity, { foreignKey: "id", as: 'business_entity_id', through: models.Business_Entity, onDelete: 'CASCADE' });
+  }
 
-Reservation.associate = models => {
-  Reservation.hasOne(User, { foreignKey: "id", as: 'user_id', through: User, onDelete('CASCADE')});
-  Reservation.hasOne(Business_Entity, { foreignKey: "id", as: 'business_entity_id', through: Business_Entity, onDelete('CASCADE')});
+  return Reservation;
+
 }

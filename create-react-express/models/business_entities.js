@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const Business = require('./businesses');
 
 module.exports = function(sequelize, DataTypes) {
-  const Business_Entity = sequelize.define('buesiness_entity', {
+  const Business_Entity = sequelize.define('Business_Entity', {
     business_entity_name: {
       type: DataTypes.STRING(50),
       allowNull: false,
@@ -13,8 +13,10 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-}
+  Business_Entity.associate = models => {
+    Business_Entity.hasOne(models.Business, { foreignKey: "business_id", as: 'business_id', through: models.Business, onDelete:'CASCADE' });
+  }
 
-Business_Entity.associate = models => {
-  Business_Entity.hasOne(User, { foreignKey: "business_id", as: 'business_id', through: Business, onDelete('CASCADE')});
+  return Business_Entity;
+
 }
