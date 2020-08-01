@@ -1,9 +1,15 @@
-import React, { useState } from "react";
-import {
-    FormField,
-    FormFieldInput,
-    FormFieldLabel,
-    FormFieldError,
-    FormFieldInline,
-    FormFieldButton,
-} from 'react-foundation-components/lib/forms';
+import React from "react";
+import Button from "../components/Button/index";
+import Form from "../components/Form/index";
+
+function Login() {
+    return (
+        <div>
+            <Form></Form>
+            <Button></Button>
+        </div>
+        
+    );
+}
+
+export default Login;

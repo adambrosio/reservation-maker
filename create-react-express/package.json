@@ -33,6 +33,7 @@
     "npm": "^6.14.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "react-foundation": "^0.9.6",
     "sequelize": "^6.3.3"
   }
 }
