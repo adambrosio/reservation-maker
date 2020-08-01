@@ -17,16 +17,22 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.7",
+    "sequelize-cli": "^6.2.0"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.5.0",
+    "dotenv": "^8.2.0",
     "express": "^4.16.3",
+    "express-session": "^1.17.1",
     "foundation-sites": "^6.6.3",
     "if-env": "^1.0.4",
     "install": "^0.13.0",
+    "mysql2": "^2.1.0",
     "npm": "^6.14.7",
     "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "react-foundation": "^0.9.6",
     "sequelize": "^6.3.3"
   }

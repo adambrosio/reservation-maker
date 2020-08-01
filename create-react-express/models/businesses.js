@@ -1,8 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const User = require('./users');
 
 module.exports = function(sequelize, DataTypes) {
-  const Business = sequelize.define('business', {
+  const Business = sequelize.define('Business', {
     business_name: {
       type: DataTypes.STRING(50),
       allowNull: false,
@@ -24,8 +23,10 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-}
+  Business.associate = models => {
+    Business.hasOne(models.User);
+  }
 
-Business.associate = models => {
-  Business.hasOne(User, { foreignKey: "owner_id", as: 'owner_id', through: User, onDelete('SET NULL')});
+  return Business;
+
 }
