@@ -1,9 +1,6 @@
 var db = require('../models');
 var passport = require('../config/passport');
-const movie_api_key = 'df49692537d122e8f2ad0279c16b2715';
 var dotenv = require('dotenv').config();
-var { MovieDb } = require('moviedb-promise');
-var moviedb = new MovieDb(movie_api_key);
 
 var { Op } = require("sequelize");
 
