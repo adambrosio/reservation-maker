@@ -1,7 +1,4 @@
 
-// TODO: new business/entity/reservation
-// TODO:
-
 const db = require('../models');
 const passport = require('../config/passport');
 const dotenv = require('dotenv').config();
@@ -84,7 +81,6 @@ module.exports = function(app) {
     })
   );
 
-  }
   });
 
   // create new business
