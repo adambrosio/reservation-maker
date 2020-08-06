@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 // Creating our User model
 module.exports = function(sequelize, DataTypes) {
-  const User = sequelize.define('User', {
+  const Users = sequelize.define('Users', {
     // The email cannot be null, and must be a proper email before creation
     username: {
       type: DataTypes.STRING,
@@ -33,13 +33,13 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  User.associate = models => {
-    User.belongsToMany(models.Business, { through: 'BusinessOwners' });
-    User.belongsToMany(models.Admin, { through: 'BusinessAdmins' } );
+  Users.associate = models => {
+    Users.belongsToMany(models.Business, { through: 'BusinessOwners' });
+    Users.belongsToMany(models.Admin, { through: 'BusinessAdmins' } );
   }
 
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
-  User.prototype.validPassword = function(password) {
+  Users.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
   };
 
@@ -48,5 +48,5 @@ module.exports = function(sequelize, DataTypes) {
   //   user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
   // });
 
-  return User;
+  return Users;
 };

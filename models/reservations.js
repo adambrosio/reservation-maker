@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Reservation.associate = models => {
-    Reservation.hasOne(models.User, { foreignKey: "id", as: 'user_id', through: models.User, onDelete: 'CASCADE' });
+    Reservation.hasOne(models.Users, { foreignKey: "id", as: 'user_id', through: models.Users, onDelete: 'CASCADE' });
     Reservation.hasOne(models.Business_Entity, { foreignKey: "id", as: 'business_entity_id', through: models.Business_Entity, onDelete: 'CASCADE' });
   }
 
