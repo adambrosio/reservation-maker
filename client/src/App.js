@@ -16,7 +16,7 @@ import Jumbotron from "./components/Jumbotron"
 class App extends Component {
   render() {
     return (
-     <Home></Home>
+     <Home accountName = "MattF"></Home>
     )
   }
 }
