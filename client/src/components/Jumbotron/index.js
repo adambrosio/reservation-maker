@@ -1,28 +1,30 @@
 import React from "react";
-import Foundation from 'foundation-sites';
+import Slider from "react-slick";   
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function Jumbotron(){
+    var settings = {dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay:true,
+        autoplaySpeed:1500
+    }
 return(
-<ul className="example-orbit" data-orbit>
-  <li>
-    <img src="../assests/storefront1.jpg" alt="slide 1" />
-    <div className="orbit-caption">
-      Store 1
+<Slider {...settings}>
+    <div>
+        <img src={process.env.PUBLIC_URL+ '/assests/storefront1.jpg'} height = "500px" width = "600px" ></img>
     </div>
-  </li>
-  <li className="active">
-    <img src="../assests/storefront2.jpg" alt="slide 2" />
-    <div className="orbit-caption">
-      Store 2
+    <div>
+        <img src={process.env.PUBLIC_URL+ '/assests/storefront2.jpg'} height = "500px" width = "600px"></img>
     </div>
-  </li>
-  <li>
-    <img src="./assests/storefront3.jpg" alt="slide 3" />
-    <div className="orbit-caption">
-      Store 3
+    <div>
+        <img src={process.env.PUBLIC_URL+ '/assests/storefront3.jpg'} height = "500px" width = "600px"></img>
     </div>
-  </li>
-</ul>
+
+</Slider>
 )
 }
 

@@ -39,6 +39,8 @@
     "react-bootstrap": "^1.3.0",
     "react-foundation": "^0.9.6",
     "react-router-dom": "^5.2.0",
-    "sequelize": "^6.3.3"
+    "react-slick": "^0.27.4",
+    "sequelize": "^6.3.3",
+    "slick-carousel": "^1.8.1"
   }
 }
