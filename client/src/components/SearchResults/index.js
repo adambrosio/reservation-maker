@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../Navbar";
 import ResultsList from "../ResultsList";
+import API from "../../utils/API";
 import "./style.css";
 
 class SearchResults extends Component {
@@ -10,8 +11,10 @@ class SearchResults extends Component {
   };
 
   businessSearch = query => {
-
-  }
+    API.search(query)
+    .then(res => this.setState({ results: res.data.data }))
+    .catch(err => console.log(err));
+  };
 
   handleInputChange = event => {
     // any business that matches the search input value
@@ -24,7 +27,7 @@ class SearchResults extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-
+    this.businessSearch(this.state.search)
   }
 
   render() {
