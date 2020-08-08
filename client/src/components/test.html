@@ -11,23 +11,29 @@
     <title>Document</title>
 </head>
 <body>
-    <form>
-        <div class="grid-container">
-            <div class="grid-x grid-padding-x">
-                <div class="medium-3 cell"></div>
-                <div class="medium-3 cell">
-                    <label>Email
-                        <input type="text" placeholder="Email"/>
-                    </label>
-                </div>
-                <div class="medium-3 cell">
-                    <label>Password
-                        <input type="text" placeholder="Password"/>
-                    </label>
-                </div>
-            </div>
+    <div class="top-bar" id="responsive-menu">
+        <div class="top-bar-left">
+            <ul class="dropdown menu" data-dropdown-menu>
+                <li class="menu-text">Site Title</li>
+                <li class="has-submenu">
+                    <a href="#0">One</a>
+                    <ul class="submenu menu vertical" data-submenu>
+                        <li><a href="#0">One</a></li>
+                        <li><a href="#0">Two</a></li>
+                        <li><a href="#0">Three</a></li>
+                    </ul>
+                </li>
+                <li><a href="#0">Two</a></li>
+                <li><a href="#0">Three</a></li>
+            </ul>
         </div>
-    </form>
+        <div class="top-bar-right">
+            <ul class="menu">
+                <li><input type="search" placeholder="Search" />
+                    <li /><button type="button" class="button">Search</button></li>
+            </ul>
+        </div>
+    </div>
 
     
         <a class="button primary" id = "submit-btn" href="#">Primary</a>

@@ -1,48 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./style.css";
+import Foundation from 'foundation-sites';
+import { TopBar, TopBarRight, TopBarLeft, Sizes } from 'react-foundation';
+import { Menu, MenuItem, MenuText, Button, MenuDropdown, MenuDropdownContent,MenuDropdownTitle} from 'react-foundation';
+import 'foundation-sites/dist/css/foundation.min.css';
+import "./style.css"
 
-// Depending on the current path, this component sets the "active" class on the appropriate navigation link item
-function Navbar() {
-  return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/">
-        Pupster
-      </Link>
-      <div>
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link
-              to="/"
-              className={
-                window.location.pathname === "/" || window.location.pathname === "/about"
-                  ? "nav-link active"
-                  : "nav-link"
-              }
-            >
-              About
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/discover"
-              className={window.location.pathname === "/discover" ? "nav-link active" : "nav-link"}
-            >
-              Discover
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/search"
-              className={window.location.pathname === "/search" ? "nav-link active" : "nav-link"}
-            >
-              Search
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  );
+
+function Navbar(props) {
+
+    return (
+<TopBar className='myTopBar'>
+        <TopBarLeft className='my-top-bar-right'>
+          <Menu className='menuLeft'>
+          <MenuText>Reservation Maker</MenuText>
+            <MenuItem isActive><a>Home</a></MenuItem>
+            <label className = "search">
+            <textarea placeholder = "Search for Business..."></textarea>
+          </label>
+          </Menu>
+          
+        </TopBarLeft>
+
+        <TopBarRight>
+                <Menu className='menuRight'>
+        <MenuItem isActive><a>{props.accountName}</a></MenuItem>
+        </Menu>
+        </TopBarRight>
+
+
+
+      </TopBar>
+       
+    )
 }
-
 export default Navbar;
