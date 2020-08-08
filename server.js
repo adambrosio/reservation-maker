@@ -24,7 +24,7 @@ app.use(passport.session());
 require('./routes/index.js')(app);
 
 // Syncing our database and logging a message to the user upon success
-db.sequelize.sync().then(function() {
+db.sequelize.sync({force: true}).then(function() {
   console.log('creating db');
   // Send every request to the React app
   // Define any API routes before this runs

@@ -22,15 +22,16 @@ module.exports = function(app) {
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
   app.post('/api/signup', function(req, res) {
-    db.User.create({
+    db.Users.create({
       username: req.body.username,
       password: req.body.password,
       email: req.body.email,
       name: req.body.name,
-      dob: req.body.dob
+      // dob: req.body.dob
+      dob: new Date(Date.now()).toISOString()
     })
     .then(function() {
-      res.status(200);
+      res.json({"message": "success!"});
     })
     .catch(function(err) {
       console.log(err);
@@ -46,11 +47,9 @@ module.exports = function(app) {
 
   // get all businesses
   app.get('/api/business', async function(req, res) {
-    return await db.Business.findAll();
-  });
 
-  // get all businesses by parameters
-  app.get('/api/business', async function(req, res) {
+    if(req.body === {})
+      return await db.Business.findAll();
 
     const { business_name, category, city } = req.body;
 
@@ -76,7 +75,7 @@ module.exports = function(app) {
   // get single business by id
   app.get('/api/business/:id', async function(req, res) {
     res.json(await db.Business.findOne({
-      attributes: ['username', 'name', 'email', 'dob'],
+      attributes: ['id', 'business_name', 'category', 'street', 'city', 'description', 'ownerId'],
       where: { id : req.params.id }
     })
   );
@@ -86,53 +85,59 @@ module.exports = function(app) {
   // create new business
   app.post('/api/business', async function(req, res) {
 
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.redirect('/');
-    } else {
-      const new_business = await db.Business.create(req.body.business);
-      const new_admin = await db.Admin.create( {
-        user_id : req.user.id,
-        business_id : new_business.id
-      });
-    }
+    // if (!req.user) {
+    //   // The user is not logged in, send back an empty object
+    //   res.redirect('/');
+    // } else {
+      db.Business.create(req.body)
+      .then(result => {
 
-    res.json(new_business);
+        db.BusinessAdmins.create({
+          business_id: result.id,
+          admin_id: result.ownerId
+        });
+        res.json(result);
+      })
+      .catch(err => {
+        res.json({'status': 'error', 'message': err});
+      });
 
   });
 
   // create new business entity
-  app.post('api/business/:id/business_entity', function(req, res) {
+  app.post('/api/business/:id/business_entity', async function(req, res) {
 
     // The user is not logged in, send back an empty object
-    if (!req.user) {
-      res.redirect('/');
-    } else {
+    // if (!req.user) {
+    //   res.redirect('/');
+    // } else {
+    // TODO: check that the user is an admin for the business
+    console.log('here');
 
-      // get business
-      const business_admin = await db.Admin.findAll({
+      // get business admins
+      const business_admin = await db.BusinessAdmins.findAll({
         where: { business_id : req.params.id}
       });
 
-      // if the user is not an admin for that business
-      if(business_admin.user_id.indexOf(req.user.id) === -1 ){
-        res.status(403);
-      }
+      // if the user is not an admin for that business, reject them
+      // if(business_admin.user_id.indexOf(req.user.id) === -1 ){
+      //   res.status(403);
+      // }
 
       // they are an admin, create new entity
-      else {
+      // else {
 
-        await db.Business_Entity.create(req.body.business_entity);
+        await db.Business_Entity.create(req.body);
 
-        res.status(200);
+        res.json({'status': 'success'});
 
-      }
-    }
+      // }
+    // }
 
   });
 
   // new reservation
-  app.post('api/business/:id/business_entity/:id', async function(req, res) {
+  app.post('api/business/:id/business_entity/:id/reserve', async function(req, res) {
 
     // ensure user is logged in
     if (!req.user) {

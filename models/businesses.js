@@ -25,7 +25,9 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Business.associate = models => {
-    Business.hasOne(models.Users);
+    Business.belongsTo(models.Users, { as: 'owner'} );
+    Business.belongsToMany(models.Users, { through: 'BusinessAdmins', foreignKey: 'business_id' });
+
   }
 
   return Business;
