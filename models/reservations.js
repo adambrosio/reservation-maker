@@ -4,24 +4,23 @@ const User = require('./users');
 
 module.exports = function(sequelize, DataTypes) {
   const Reservation = sequelize.define('Reservation', {
-    reservation_date: {
-      type: DataTypes.DATE,
+    reserved_entity_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     time_start: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: false
     },
     time_end: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: false
     }
   });
-
-  Reservation.associate = models => {
-    Reservation.belongsTo(models.Users, { foreignKey: "id", as: 'user_id', through: models.Users, onDelete: 'CASCADE' });
-    Reservation.belongsTo(models.Business_Entity, { foreignKey: "id", as: 'business_entity_id', through: models.Business_Entity, onDelete: 'CASCADE' });
-  }
 
   return Reservation;
 

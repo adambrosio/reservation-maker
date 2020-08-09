@@ -137,20 +137,21 @@ module.exports = function(app) {
   });
 
   // new reservation
-  app.post('api/business/:id/business_entity/:id/reserve', async function(req, res) {
+  app.post('/api/business/:id/business_entity/:id/reserve', async function(req, res) {
 
     // ensure user is logged in
-    if (!req.user) {
-      res.redirect('/');
-    } else {
+    // if (!req.user) {
+    //   res.redirect('/');
+    // } else {
+    req.body.time_start = new Date(Date.now()).toISOString();
+    req.body.time_end = new Date(Date.now()).toISOString();
       try {
-        await db.Reservation.create(req.body.reservation);
-        res.status(200)
+        res.json(await db.Reservation.create(req.body))
       }
       catch(err) {
         res.json(err).status(404);
       }
-    }
+    // }
 
   });
 
