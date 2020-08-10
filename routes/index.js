@@ -105,11 +105,20 @@ module.exports = function(app) {
 
       let { business_name, category, street, city, description } = req.body;
 
-      business_name = business_name.trim();
-      category = category.trim();
-      street = street.trim();
-      city = city.trim();
-      description = description.trim();
+      // trim or return an error
+      if(business_name) business_name = business_name.trim();
+      else res.status(401).json({'err': 'missing business name'});
+
+      if(category) category = category.trim();
+      else res.status(401).json({'err': 'missing category'});
+
+      if(street) street = street.trim();
+      else res.status(401).json({'err': 'missing street address'});
+
+      if(city) city = city.trim();
+      else res.status(401).json({'err': 'missing city'});
+
+      if(description) description = description.trim();
 
       db.Business.create({
         business_name: business_name,
@@ -142,6 +151,9 @@ module.exports = function(app) {
     // } else {
 
     console.log(req.body);
+
+    if(!(req.body.business_id) || !(req.body.admin_id))
+      res.status(401).json({'err': 'incomplete request'})
 
       // get business admins
       const business_admin = await db.BusinessAdmins.findAll({
@@ -176,13 +188,15 @@ module.exports = function(app) {
     // if (!req.user) {
     //   res.redirect('/');
     // } else {
+
+    // TODO: remove next 2 lines
     req.body.time_start = new Date(Date.now()).toISOString();
     req.body.time_end = new Date(Date.now()).toISOString();
       try {
         res.json(await db.Reservation.create(req.body))
       }
       catch(err) {
-        res.json(err).status(404);
+        res.status(404).json(err);
       }
     // }
 
