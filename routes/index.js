@@ -1,4 +1,3 @@
-
 const db = require('../models');
 const passport = require('../config/passport');
 const dotenv = require('dotenv').config();
@@ -14,7 +13,7 @@ module.exports = function(app) {
     // user logged in
     // TODO send all user data to front end, store in context api
     // include user data, reservations, owned/admined businessess
-    res.status(200);
+    res.status(200).json('user_data': {'test': 'test data'});
 
   });
 
@@ -22,12 +21,21 @@ module.exports = function(app) {
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
   app.post('/api/signup', function(req, res) {
+
+    let { username, password, email, name, dob } = req.body;
+
+    username = username.trim();
+    password = password.trim();
+    email = email.trim();
+    name = name.trim();
+    dob = dob.trim();
+
     db.Users.create({
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email,
-      name: req.body.name,
-      // dob: req.body.dob
+      username: username,
+      password: password,
+      email: email,
+      name: name,
+      // dob: dob
       dob: new Date(Date.now()).toISOString()
     })
     .then(function() {
@@ -35,7 +43,7 @@ module.exports = function(app) {
     })
     .catch(function(err) {
       console.log(err);
-      res.status(401);
+      res.status(401).json({'error': err});
     });
   });
 
@@ -61,7 +69,7 @@ module.exports = function(app) {
 
     if(category) category = category.trim();
     else category = '';
-    
+
     if(city) city = city.trim();
     else city = '';
 
@@ -94,9 +102,25 @@ module.exports = function(app) {
     //   // The user is not logged in, send back an empty object
     //   res.redirect('/');
     // } else {
-      db.Business.create(req.body)
+
+      let { business_name, category, street, city, description } = req.body;
+
+      business_name = business_name.trim();
+      category = category.trim();
+      street = street.trim();
+      city = city.trim();
+      description = description.trim();
+
+      db.Business.create({
+        business_name: business_name,
+        category: category,
+        street: street,
+        city: city,
+        description: description
+      })
       .then(result => {
 
+        // can take its time, doesn't need to be synced
         db.BusinessAdmins.create({
           business_id: result.id,
           admin_id: result.ownerId
@@ -130,9 +154,8 @@ module.exports = function(app) {
       console.log(business_admin);
 
       // if the user is not an admin for that business, reject them
-      // if(business_admin.user_id.indexOf(req.user.id) === -1 ){
-      //   res.status(403);
-      // }
+      if(business_admin = [])
+        res.status(403).json('error': 'unauthorized request');
 
       // they are an admin, create new entity
       // else {
