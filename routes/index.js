@@ -87,11 +87,25 @@ module.exports = function(app) {
 
   // get single business by id
   app.get('/api/business/:id', async function(req, res) {
-    res.json(await db.Business.findOne({
+    const business = await db.Business.findOne({
       attributes: ['id', 'business_name', 'category', 'street', 'city', 'description', 'ownerId'],
       where: { id : req.params.id }
-    })
-  );
+    });
+    business.userIsAdmin = false;
+    if(req.user) {
+      const admin = await db.BusinessAdmins.findAll({
+        where: {
+          business_id : req.params.id,
+          admin_id: req.user.id
+         }
+      });
+
+      if(admin !== [])
+        business.userIsAdmin = true;
+
+    }
+
+    res.status(200).json(business);
 
   });
 
@@ -139,6 +153,58 @@ module.exports = function(app) {
       .catch(err => {
         res.json({'status': 'error', 'message': err});
       });
+
+  });
+
+  app.put('/api/business/:id', async function(req, res) {
+
+    // if (!req.user) {
+    //   // The user is not logged in, send back an empty object
+    //   res.redirect('/');
+    // } else {
+
+    let { business_name, category, street, city, description } = req.body;
+
+    // trim or return an error
+    if(business_name) business_name = business_name.trim();
+    else res.status(401).json({'err': 'missing business name'});
+
+    if(category) category = category.trim();
+    else res.status(401).json({'err': 'missing category'});
+
+    if(street) street = street.trim();
+    else res.status(401).json({'err': 'missing street address'});
+
+    if(city) city = city.trim();
+    else res.status(401).json({'err': 'missing city'});
+
+    if(description) description = description.trim();
+
+    // get business admins based on user and business
+    const business_admin = await db.BusinessAdmins.findAll({
+      where: {
+        business_id : req.params.id,
+        admin_id: req.body.user.id
+       }
+    });
+
+    console.log(business_admin);
+
+    // if the user is not an admin for that business, reject them
+    if(business_admin = [])
+      res.status(403).json('error': 'unauthorized request');
+
+    // update based on the above request
+    const updatedBusiness = await db.Business.update({
+      business_name: business_name,
+      category: category,
+      street: street,
+      city: city,
+      description: description
+    },
+    where: {
+      id: req.params.id
+    });
 
   });
 
