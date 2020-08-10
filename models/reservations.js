@@ -19,6 +19,11 @@ module.exports = function(sequelize, DataTypes) {
     time_end: {
       type: DataTypes.DATE,
       allowNull: false
+    },
+    status: {
+      type: DataTypes.ENUM(['reserved', 'canceled', 'out-of-order']),
+      allowNull: false,
+      defaultValue: 'reserved'
     }
   });
 
