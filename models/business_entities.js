@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Business_Entity.associate = models => {
-    Business_Entity.belongsTo(models.Business, { foreignKey: "id", as: 'business_id', through: models.Business, onDelete:'CASCADE' });
+    Business_Entity.belongsTo(models.Business, { foreignKey: "business_id", onDelete:'CASCADE' });
   }
 
   return Business_Entity;

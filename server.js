@@ -4,10 +4,17 @@ const passport = require('./config/passport');
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
+const seed = require('./db/seeds.js');
+
+// sync models with db
+let force = false;
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+}
+else {
+  force = true;
 }
 
 const db = require('./models');
@@ -24,8 +31,9 @@ app.use(passport.session());
 require('./routes/index.js')(app);
 
 // Syncing our database and logging a message to the user upon success
-db.sequelize.sync({force: true}).then(function() {
-  console.log('creating db');
+db.sequelize.sync({force: force}).then(function() {
+  if(force) seed();
+  
   // Send every request to the React app
   // Define any API routes before this runs
   app.get("*", function(req, res) {
