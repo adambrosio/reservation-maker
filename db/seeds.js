@@ -1,9 +1,9 @@
 const { Op } = require("sequelize");
 const db = require('../models');
 
-const seed = () => {
+const seed = async () => {
 
-  db.Users.bulkCreate([
+  await db.Users.bulkCreate([
     {
       username: 'abc123',
       password: 'asdfasdf',
@@ -41,7 +41,7 @@ const seed = () => {
     }
   ]);
 
-  db.Business.bulkCreate([
+  await db.Business.bulkCreate([
     {
       business_name: "yestercades",
       category: "entertainment",
@@ -64,7 +64,7 @@ const seed = () => {
     },
   ]);
 
-  db.BusinessAdmins.bulkCreate([
+  await db.BusinessAdmins.bulkCreate([
     {
       business_id: "1",
       admin_id: "1"
@@ -79,7 +79,7 @@ const seed = () => {
     }
   ]);
 
-  db.Business_Entity.bulkCreate([
+  await db.Business_Entity.bulkCreate([
     {
       business_entity_name: "mario kart",
       description: "racing game",
@@ -107,7 +107,7 @@ const seed = () => {
     }
   ]);
 
-  db.Reservation.bulkCreate([
+  await db.Reservation.bulkCreate([
     {
       reserved_entity_id: "2",
       user_id: "1",

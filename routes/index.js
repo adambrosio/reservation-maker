@@ -48,25 +48,30 @@ module.exports = function(app) {
   // get all businesses
   app.get('/api/business', async function(req, res) {
 
+    console.log(req.body);
+
     if(req.body === {})
       return await db.Business.findAll();
 
-    const { business_name, category, city } = req.body;
+    let { business_name, category, city } = req.body;
 
-    // build out the 'where' constraints for the search
-    const where = {};
+    // get rid of white space, define as empty string if not defined
+    if(business_name) business_name = business_name.trim();
+    else business = '';
 
-    // if there are any of the below, add it to the 'where' obj
-    if(business_name) where.business_name = { business_name : {[Op.like] : `${business_name}%`} };
-    if(category) where.category = { caterogy : category };
-    if(city) where.city = { city : { [OP.like] : `${city}` } };
-
-    // if all of the search fields are null, just get all
-    if(where === {}) return await db.Business.findAll();
+    if(category) category = category.trim();
+    else category = '';
+    
+    if(city) city = city.trim();
+    else city = '';
 
     // otherwise, do a search with the where
     res.json(await db.Business.findAll({
-      where: where
+      where: {
+        business_name : {[Op.like] : `%${business_name}%`},
+        category : {[Op.like] : `%${category}%` },
+        city : { [Op.like] : `%${city}%` }
+      }
     })
   );
 
@@ -111,13 +116,18 @@ module.exports = function(app) {
     // if (!req.user) {
     //   res.redirect('/');
     // } else {
-    // TODO: check that the user is an admin for the business
-    console.log('here');
+
+    console.log(req.body);
 
       // get business admins
       const business_admin = await db.BusinessAdmins.findAll({
-        where: { business_id : req.params.id}
+        where: {
+          business_id : req.params.id,
+          admin_id: req.body.user.id
+         }
       });
+
+      console.log(business_admin);
 
       // if the user is not an admin for that business, reject them
       // if(business_admin.user_id.indexOf(req.user.id) === -1 ){
