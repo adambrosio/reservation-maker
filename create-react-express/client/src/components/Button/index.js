@@ -1,12 +1,12 @@
 import React from "react";
-import Foundation from 'react-foundation';
 
-function SubmitBtn(props) {
+
+function Button(props) {
     return (
-        <div class  = "btn">
-            <a class="button primary" id = "submit-btn" href="#">Primary</a>
+        <div className="btn">
+            <a className={props.class} id={props.id} href="#">{props.name}</a>
         </div>
     );
 }
 
-export default SubmitBtn;
+export default Button;

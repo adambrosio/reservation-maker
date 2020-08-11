@@ -1,0 +1,5 @@
+***JSX for the login page
+<Form name="Email"/>
+<Form name="Password"/>
+<Button class="button primary" id="submit-btn" name="Submit"/>
+<Button class="button secondary" id="signup-btn" name="Sign Up"/>

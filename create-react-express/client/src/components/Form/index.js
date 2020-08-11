@@ -1,19 +1,14 @@
 import React from "react";
-import Foundation from 'react-foundation';
+
 
 function Form(props) {
     return (
         <form>
-            <div class="grid-container">
-                <div class="grid-x grid-padding-x">
-                    <div class="medium-6 cell">
-                        <label>Email
-                            <input type="text" placeholder="Email"/>
-                        </label>
-                    </div>
-                    <div class="medium-6 cell">
-                        <label>Password
-                            <input type="text" placeholder="Password"/>
+            <div className="grid-container">
+                <div className="grid-x grid-padding-x">
+                    <div className="medium-6 cell">
+                        <label>{props.name}
+                            <input type="text" placeholder={props.name}/>
                         </label>
                     </div>
                 </div>
