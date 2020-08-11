@@ -192,7 +192,7 @@ module.exports = function(app) {
 
     // if the user is not an admin for that business, reject them
     if(business_admin = [])
-      res.status(403).json('error': 'unauthorized request');
+      res.status(403).json({'error': 'unauthorized request'});
 
     // update based on the above request
     const updatedBusiness = await db.Business.update({
@@ -201,10 +201,11 @@ module.exports = function(app) {
       street: street,
       city: city,
       description: description
-    },
-    where: {
-      id: req.params.id
-    });
+    },{
+      where: {
+        id: req.params.id
+      }
+    })
 
   });
 
@@ -233,7 +234,7 @@ module.exports = function(app) {
 
       // if the user is not an admin for that business, reject them
       if(business_admin = [])
-        res.status(403).json('error': 'unauthorized request');
+        res.status(403).json({'error': 'unauthorized request'});
 
       // they are an admin, create new entity
       // else {
@@ -262,7 +263,7 @@ module.exports = function(app) {
         res.json(await db.Reservation.create(req.body))
       }
       catch(err) {
-        res.status(404).json(err);
+        res.status(404).json({err:err});
       }
     // }
 
