@@ -28,14 +28,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     dob: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: true
     }
   });
 
   Users.associate = models => {
-    Users.belongsToMany(models.Business, { through: 'BusinessOwners' });
-    Users.belongsToMany(models.Admin, { through: 'BusinessAdmins' } );
+    Users.belongsToMany(models.Business, { through: 'BusinessAdmins', foreignKey: 'admin_id' });
   }
 
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
@@ -44,9 +43,9 @@ module.exports = function(sequelize, DataTypes) {
   };
 
   // has password
-  // User.addHook('beforeCreate', function(user) {
-  //   user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
-  // });
+  Users.addHook('beforeCreate', function(user) {
+    user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  });
 
   return Users;
 };
