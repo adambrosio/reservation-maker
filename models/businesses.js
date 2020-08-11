@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
     },
     category: {
-      type: DataTypes.ENUM(['entertainment', 'fitness', 'resturaunt', 'health/beauty', 'maintenance', 'miscellaneous'])
+      type: DataTypes.ENUM(['entertainment', 'fitness', 'resturaunt', 'health/beauty', 'maintenance', 'miscellaneous']),
+      allowNull: false
     },
     street: {
       type: DataTypes.STRING(50),
@@ -24,7 +25,9 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Business.associate = models => {
-    Business.hasOne(models.User);
+    Business.belongsTo(models.Users, { as: 'owner'} );
+    Business.belongsToMany(models.Users, { through: 'BusinessAdmins', foreignKey: 'business_id' });
+
   }
 
   return Business;
