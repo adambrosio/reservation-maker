@@ -13,7 +13,7 @@ module.exports = function(app) {
     // user logged in
     // TODO send all user data to front end, store in context api
     // include user data, reservations, owned/admined businessess
-    res.status(200).json('user_data': {'test': 'test data'});
+    res.status(200).json({'user_data': {'test': 'test data'}});
 
   });
 
