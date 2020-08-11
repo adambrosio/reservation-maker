@@ -30,11 +30,18 @@
     "foundation-sites": "^6.6.3",
     "if-env": "^1.0.4",
     "install": "^0.13.0",
+    "jquery": "^3.5.1",
     "mysql2": "^2.1.0",
+    "node-sass": "^4.14.1",
     "npm": "^6.14.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.3.0",
     "react-foundation": "^0.9.6",
-    "sequelize": "^6.3.3"
+    "react-router-dom": "^5.2.0",
+    "react-slick": "^0.27.4",
+    "sequelize": "^6.3.3",
+    "slick-carousel": "^1.8.1"
   }
 }

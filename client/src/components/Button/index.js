@@ -1,10 +1,10 @@
 import React from "react";
-import Foundation from 'react-foundation';
+//import Foundation from 'react-foundation';
 
 function SubmitBtn(props) {
     return (
-        <div class  = "btn">
-            <a class="button primary" id = "submit-btn" href="#">Primary</a>
+        <div className  = "btn">
+            <a className={props.button} id = "submit-btn" href="#">{props.name}</a>
         </div>
     );
 }
