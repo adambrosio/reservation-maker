@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Button from "../components/Button/index";
-import Form from "../components/Form/index";
-import { getUserData } from '../utils/API'
-import Reservation from "../components/Reservation";
+import Button from "../../components/Button/index";
+import Form from "../../components/Form/index";
+import { getUserData } from '../../utils/API'
+import Reservation from "../../components/Reservation";
 
 function Profile() {
 

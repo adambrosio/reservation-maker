@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Profile from './pages/profile'
+import Profile from './pages/Profile';
 import 'foundation-sites/dist/css/foundation.min.css';
 import './App.css';
 
