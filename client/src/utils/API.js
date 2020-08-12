@@ -1,13 +1,28 @@
-businessResults = (business) => {
+
+
+module.exports = {
+  businessResults: (business) => {
     fetch("/api/business", {
-        method: "POST",
-        mode: "cors",
-        body:JSON.stringify(business)
+      method: "POST",
+      mode: "cors",
+      body:JSON.stringify(business)
     })
     .then(result => result.json())
     .then(result => {
-        // fetchBusiness() not defined yet
-        this.fetchBusiness();
+      this.fetchBusiness();
     })
-}
+  },
 
+  getUserData: () => {
+    let myData;
+
+    fetch("/api/user")
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      return data;
+    });
+
+  }
+
+}

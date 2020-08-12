@@ -13,9 +13,95 @@ module.exports = function(app) {
     // user logged in
     // TODO send all user data to front end, store in context api
     // include user data, reservations, owned/admined businessess
-    res.status(200).json({'user_data': {'test': 'test data'}});
+    res.status(200).json({'message': 'success'});
 
   });
+
+  // return user's reservation data
+  app.get('/api/userReservations', async function(req, res) {
+
+
+
+    try {
+      await db.Reservation.findAll({
+        where: {
+          user_id: 1
+        }
+      }).then(async reservations => {
+
+        const user_reservations = [];
+        for await( reservation of reservations ) {
+
+          console.log(reservation);
+
+          await db.Business_Entity.findOne({
+            where: {
+              id: reservation.reserved_entity_id
+            }
+          }).then(async entity => {
+
+            console.log(entity);
+
+            await db.Business.findOne({
+                where: {
+                  id: entity.business_id
+                }
+              }).then(business => {
+
+                console.log(business);
+
+                user_reservations.push({
+                  reservation: reservation.dataValues,
+                  entity: entity.dataValues,
+                  business: business.dataValues
+                });
+
+              });
+
+          });
+
+
+        }
+        
+        console.log('finished');
+
+        res.json(user_reservations);
+      });
+
+    } catch (e) {
+      console.log(e);
+    }
+
+  });
+
+  // route to get the user data
+  app.get('/api/user', async function(req, res) {
+
+    // if (!req.user) {
+    //   // The user is not logged in, send back an empty object
+    //   res.redirect('/');
+    // } else {
+
+    try {
+      const userData = await db.Users.findOne({
+        where: {
+          // id: req.user.id
+          id: 1
+        },
+        attributes: ['id', 'name', 'username', 'dob', 'email']
+      });
+
+      if(userData !== []) res.json(userData.dataValues);
+      else res.json({'err': 'user not found'});
+    }
+    catch(e) {
+      console.log(e);
+    }
+    // }
+
+  });
+
+
 
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
@@ -59,7 +145,7 @@ module.exports = function(app) {
     console.log(req.body);
 
     if(req.body === {})
-      return await db.Business.findAll();
+    return await db.Business.findAll();
 
     let { business_name, category, city } = req.body;
 
@@ -83,190 +169,190 @@ module.exports = function(app) {
     })
   );
 
+});
+
+// get single business by id
+app.get('/api/business/:id', async function(req, res) {
+  const business = await db.Business.findOne({
+    attributes: ['id', 'business_name', 'category', 'street', 'city', 'description', 'ownerId'],
+    where: { id : req.params.id }
   });
-
-  // get single business by id
-  app.get('/api/business/:id', async function(req, res) {
-    const business = await db.Business.findOne({
-      attributes: ['id', 'business_name', 'category', 'street', 'city', 'description', 'ownerId'],
-      where: { id : req.params.id }
-    });
-    business.userIsAdmin = false;
-    if(req.user) {
-      const admin = await db.BusinessAdmins.findAll({
-        where: {
-          business_id : req.params.id,
-          admin_id: req.user.id
-         }
-      });
-
-      if(admin !== [])
-        business.userIsAdmin = true;
-
-    }
-
-    res.status(200).json(business);
-
-  });
-
-  // create new business
-  app.post('/api/business', async function(req, res) {
-
-    // if (!req.user) {
-    //   // The user is not logged in, send back an empty object
-    //   res.redirect('/');
-    // } else {
-
-      let { business_name, category, street, city, description } = req.body;
-
-      // trim or return an error
-      if(business_name) business_name = business_name.trim();
-      else res.status(401).json({'err': 'missing business name'});
-
-      if(category) category = category.trim();
-      else res.status(401).json({'err': 'missing category'});
-
-      if(street) street = street.trim();
-      else res.status(401).json({'err': 'missing street address'});
-
-      if(city) city = city.trim();
-      else res.status(401).json({'err': 'missing city'});
-
-      if(description) description = description.trim();
-
-      db.Business.create({
-        business_name: business_name,
-        category: category,
-        street: street,
-        city: city,
-        description: description
-      })
-      .then(result => {
-
-        // can take its time, doesn't need to be synced
-        db.BusinessAdmins.create({
-          business_id: result.id,
-          admin_id: result.ownerId
-        });
-        res.json(result);
-      })
-      .catch(err => {
-        res.json({'status': 'error', 'message': err});
-      });
-
-  });
-
-  app.put('/api/business/:id', async function(req, res) {
-
-    // if (!req.user) {
-    //   // The user is not logged in, send back an empty object
-    //   res.redirect('/');
-    // } else {
-
-    let { business_name, category, street, city, description } = req.body;
-
-    // trim or return an error
-    if(business_name) business_name = business_name.trim();
-    else res.status(401).json({'err': 'missing business name'});
-
-    if(category) category = category.trim();
-    else res.status(401).json({'err': 'missing category'});
-
-    if(street) street = street.trim();
-    else res.status(401).json({'err': 'missing street address'});
-
-    if(city) city = city.trim();
-    else res.status(401).json({'err': 'missing city'});
-
-    if(description) description = description.trim();
-
-    // get business admins based on user and business
-    const business_admin = await db.BusinessAdmins.findAll({
+  business.userIsAdmin = false;
+  if(req.user) {
+    const admin = await db.BusinessAdmins.findAll({
       where: {
         business_id : req.params.id,
-        admin_id: req.body.user.id
-       }
+        admin_id: req.user.id
+      }
     });
 
-    console.log(business_admin);
+    if(admin !== [])
+    business.userIsAdmin = true;
 
-    // if the user is not an admin for that business, reject them
-    if(business_admin = [])
-      res.status(403).json({'error': 'unauthorized request'});
+  }
 
-    // update based on the above request
-    const updatedBusiness = await db.Business.update({
-      business_name: business_name,
-      category: category,
-      street: street,
-      city: city,
-      description: description
-    },{
-      where: {
-        id: req.params.id
-      }
-    })
+  res.status(200).json(business);
 
+});
+
+// create new business
+app.post('/api/business', async function(req, res) {
+
+  // if (!req.user) {
+  //   // The user is not logged in, send back an empty object
+  //   res.redirect('/');
+  // } else {
+
+  let { business_name, category, street, city, description } = req.body;
+
+  // trim or return an error
+  if(business_name) business_name = business_name.trim();
+  else res.status(401).json({'err': 'missing business name'});
+
+  if(category) category = category.trim();
+  else res.status(401).json({'err': 'missing category'});
+
+  if(street) street = street.trim();
+  else res.status(401).json({'err': 'missing street address'});
+
+  if(city) city = city.trim();
+  else res.status(401).json({'err': 'missing city'});
+
+  if(description) description = description.trim();
+
+  db.Business.create({
+    business_name: business_name,
+    category: category,
+    street: street,
+    city: city,
+    description: description
+  })
+  .then(result => {
+
+    // can take its time, doesn't need to be synced
+    db.BusinessAdmins.create({
+      business_id: result.id,
+      admin_id: result.ownerId
+    });
+    res.json(result);
+  })
+  .catch(err => {
+    res.json({'status': 'error', 'message': err});
   });
 
-  // create new business entity
-  app.post('/api/business/:id/business_entity', async function(req, res) {
+});
 
-    // The user is not logged in, send back an empty object
-    // if (!req.user) {
-    //   res.redirect('/');
-    // } else {
+app.put('/api/business/:id', async function(req, res) {
 
-    console.log(req.body);
+  // if (!req.user) {
+  //   // The user is not logged in, send back an empty object
+  //   res.redirect('/');
+  // } else {
 
-    if(!(req.body.business_id) || !(req.body.admin_id))
-      res.status(401).json({'err': 'incomplete request'})
+  let { business_name, category, street, city, description } = req.body;
 
-      // get business admins
-      const business_admin = await db.BusinessAdmins.findAll({
-        where: {
-          business_id : req.params.id,
-          admin_id: req.body.user.id
-         }
-      });
+  // trim or return an error
+  if(business_name) business_name = business_name.trim();
+  else res.status(401).json({'err': 'missing business name'});
 
-      console.log(business_admin);
+  if(category) category = category.trim();
+  else res.status(401).json({'err': 'missing category'});
 
-      // if the user is not an admin for that business, reject them
-      if(business_admin = [])
-        res.status(403).json({'error': 'unauthorized request'});
+  if(street) street = street.trim();
+  else res.status(401).json({'err': 'missing street address'});
 
-      // they are an admin, create new entity
-      // else {
+  if(city) city = city.trim();
+  else res.status(401).json({'err': 'missing city'});
 
-        await db.Business_Entity.create(req.body);
+  if(description) description = description.trim();
 
-        res.json({'status': 'success'});
-
-      // }
-    // }
-
+  // get business admins based on user and business
+  const business_admin = await db.BusinessAdmins.findAll({
+    where: {
+      business_id : req.params.id,
+      admin_id: req.body.user.id
+    }
   });
 
-  // new reservation
-  app.post('/api/business/:id/business_entity/:id/reserve', async function(req, res) {
+  console.log(business_admin);
 
-    // ensure user is logged in
-    // if (!req.user) {
-    //   res.redirect('/');
-    // } else {
+  // if the user is not an admin for that business, reject them
+  if(business_admin = [])
+  res.status(403).json({'error': 'unauthorized request'});
 
-    // TODO: remove next 2 lines
-    req.body.time_start = new Date(Date.now()).toISOString();
-    req.body.time_end = new Date(Date.now()).toISOString();
-      try {
-        res.json(await db.Reservation.create(req.body))
-      }
-      catch(err) {
-        res.status(404).json({err:err});
-      }
-    // }
+  // update based on the above request
+  const updatedBusiness = await db.Business.update({
+    business_name: business_name,
+    category: category,
+    street: street,
+    city: city,
+    description: description
+  },{
+    where: {
+      id: req.params.id
+    }
+  })
 
+});
+
+// create new business entity
+app.post('/api/business/:id/business_entity', async function(req, res) {
+
+  // The user is not logged in, send back an empty object
+  // if (!req.user) {
+  //   res.redirect('/');
+  // } else {
+
+  console.log(req.body);
+
+  if(!(req.body.business_id) || !(req.body.admin_id))
+  res.status(401).json({'err': 'incomplete request'})
+
+  // get business admins
+  const business_admin = await db.BusinessAdmins.findAll({
+    where: {
+      business_id : req.params.id,
+      admin_id: req.body.user.id
+    }
   });
+
+  console.log(business_admin);
+
+  // if the user is not an admin for that business, reject them
+  if(business_admin = [])
+  res.status(403).json({'error': 'unauthorized request'});
+
+  // they are an admin, create new entity
+  // else {
+
+  await db.Business_Entity.create(req.body);
+
+  res.json({'status': 'success'});
+
+  // }
+  // }
+
+});
+
+// new reservation
+app.post('/api/business/:id/business_entity/:id/reserve', async function(req, res) {
+
+  // ensure user is logged in
+  // if (!req.user) {
+  //   res.redirect('/');
+  // } else {
+
+  // TODO: remove next 2 lines
+  req.body.time_start = new Date(Date.now()).toISOString();
+  req.body.time_end = new Date(Date.now()).toISOString();
+  try {
+    res.json(await db.Reservation.create(req.body))
+  }
+  catch(err) {
+    res.status(404).json({err:err});
+  }
+  // }
+
+});
 
 }
