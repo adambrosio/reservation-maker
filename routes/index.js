@@ -294,6 +294,16 @@ app.put('/api/business/:id', async function(req, res) {
 
 });
 
+app.get('/api/business/:id/business_entity', async function(req, res) {
+
+  res.json( await db.Business_Entity.findAll({
+    where: {
+      business_id : req.params.id
+    }})
+  );
+
+});
+
 // create new business entity
 app.post('/api/business/:id/business_entity', async function(req, res) {
 
