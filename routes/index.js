@@ -141,14 +141,16 @@ module.exports = function(app) {
   // get all businesses
   app.get('/api/business', async function(req, res) {
 
-    console.log(req.body);
+    console.log('hey');
+    res.json({})
+    console.log(req);
 
     if(req.body === {})
     return await db.Business.findAll();
 
     let { business_name, category, city } = req.body;
 
-    // get rid of white space, define as empty string if not defined
+    // get rid of white space, define as empty string if not defined to get all
     if(business_name) business_name = business_name.trim();
     else business = '';
 
