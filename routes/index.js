@@ -62,14 +62,13 @@ module.exports = function(app) {
 
 
         }
-        
-        console.log('finished');
 
         res.json(user_reservations);
       });
 
     } catch (e) {
       console.log(e);
+      res.json({"error": e});
     }
 
   });
