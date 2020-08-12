@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import SignupForm from "../components/SignupForm";
-import "../components/signupTest.css";
+import SignupForm from "../../components/SignupForm";
+import "../../components/signupTest.css";
 
 const emailRegex = RegExp(
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -85,8 +85,8 @@ class Signup extends Component {
     render() {
         return (
             <div>
-                <SignupForm 
-                    handleChange={this.handleChange} 
+                <SignupForm
+                    handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                     firstName={this.state.formErrors.firstName}
                     lastName={this.state.formErrors.lastName}

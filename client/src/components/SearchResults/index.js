@@ -4,45 +4,30 @@ import ResultsList from "../ResultsList";
 import API from "../../utils/API";
 import "./style.css";
 
-class SearchResults extends Component {
-  state = {
-    search: "",
-    results: []
-  };
+function SearchResults(props) {
 
-  businessSearch = query => {
-    API.search(query)
-    .then(res => this.setState({ results: res.data.data }))
-    .catch(err => console.log(err));
-  };
+  const businesses = props.results;
+  console.log('titties');
+  console.log(businesses);
 
-  handleInputChange = event => {
-    // any business that matches the search input value
-    const business = event.target.business;
-    const value = event.target.value;
-    this.setState({
-      [business]: value
-    });
-  }
+  return(
+    <div>
+      <h4>Businesses that match your search:</h4>
+      {businesses.map( business => {
+        return (
+          <div>
+          <h6>{business.business_name}</h6>
+          <h6>{business.category}</h6>
+          <h6>{business.street}, {business.city}</h6>
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-    this.businessSearch(this.state.search)
-  }
+          </div>
 
-  render() {
-    return (
-      <div>
-        <div className="search-results">{this.state.search}</div>
-        <Navbar
-          search={this.state.search}
-          handleFormSubmit={this.handleFormSubmit}
-          handleInputChange={this.handleInputChange}
-        />
-        <ResultsList results={this.state.results} />
-      </div>
-    );
-  }
+        )
+      })}
+
+    </div>
+  )
 }
+
 
 export default SearchResults;

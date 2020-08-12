@@ -1,6 +1,7 @@
 const db = require('../models');
 const passport = require('../config/passport');
 const dotenv = require('dotenv').config();
+const URLSearchParams = require('url').URLSearchParams;
 
 const { Op } = require("sequelize");
 
@@ -19,8 +20,6 @@ module.exports = function(app) {
 
   // return user's reservation data
   app.get('/api/userReservations', async function(req, res) {
-
-
 
     try {
       await db.Reservation.findAll({
@@ -62,14 +61,13 @@ module.exports = function(app) {
 
 
         }
-        
-        console.log('finished');
 
         res.json(user_reservations);
       });
 
     } catch (e) {
       console.log(e);
+      res.json({"error": e});
     }
 
   });
@@ -142,16 +140,17 @@ module.exports = function(app) {
   // get all businesses
   app.get('/api/business', async function(req, res) {
 
-    console.log(req.body);
 
-    if(req.body === {})
-    return await db.Business.findAll();
+    if(req.query === {}) {
+      res.json(await db.Business.findAll());
+      return;
+    }
 
-    let { business_name, category, city } = req.body;
+    let { business_name, category, city } = req.query;
 
-    // get rid of white space, define as empty string if not defined
+    // get rid of white space, define as empty string if not defined to get all
     if(business_name) business_name = business_name.trim();
-    else business = '';
+    else business_name = '';
 
     if(category) category = category.trim();
     else category = '';
@@ -292,6 +291,16 @@ app.put('/api/business/:id', async function(req, res) {
       id: req.params.id
     }
   })
+
+});
+
+app.get('/api/business/:id/business_entity', async function(req, res) {
+
+  res.json( await db.Business_Entity.findAll({
+    where: {
+      business_id : req.params.id
+    }})
+  );
 
 });
 
