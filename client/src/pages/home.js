@@ -8,11 +8,11 @@ import "slick-carousel/slick/slick-theme.css";
 function Home(props){
     return(
         <div className="container">
-        <Navbar accountName = {props.accountName}></Navbar>
-        <Jumbotron></Jumbotron>
-        <Footer></Footer>
+            <Navbar accountName = {props.accountName}/>
+            <Jumbotron/>
+            <Footer/>
         </div>  
-    )
+    );
 }
 
 export default Home;
