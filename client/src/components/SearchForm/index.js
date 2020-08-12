@@ -10,15 +10,11 @@ function SearchForm() {
 
   useEffect( () => {
 
-    const businesses = fetch('/api/business', {
-      headers: {
-       'Content-Type': 'application/json'
-     }
-    })
+    const businesses = fetch('/api/business')
       .then(response => response.json())
       .then(data => data);
 
-    Promise.all([ searchState ])
+    Promise.all([ businesses ])
       .then(payload => {
          setSearchState(payload[0]);
        });
@@ -46,9 +42,8 @@ function SearchForm() {
           <input name="city" className="" placeholder="City" id="city" />
 
           <button type="submit" className="btn btn-success"
-          onClick={ () => {
-
-            console.log('yo');
+          onClick={ e => {
+            e.preventDefault();
 
             const formData = {
               business_name: document.querySelector('#business_name').value,
@@ -56,15 +51,9 @@ function SearchForm() {
               city: document.querySelector('#city').value
             }
 
-            console.log('yo');
-
-            fetch('/api/business', {
-              formData: formData
-            })
-            .then( res => {
-              console.log(res);
-              setSearchState(res);
-            });
+            fetch('/api/business?' + new URLSearchParams(formData))
+            .then( response => response.json())
+            .then( data => setSearchState(data));
 
           }} >
             Search
