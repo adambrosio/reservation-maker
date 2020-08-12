@@ -7,7 +7,6 @@ import "./style.css";
 function SearchResults(props) {
 
   const businesses = props.results;
-  console.log('titties');
   console.log(businesses);
 
   return(
