@@ -11,8 +11,13 @@ import Navbar from "./components/Navbar";
 import 'foundation-sites/dist/css/foundation.min.css';
 import './App.css';
 import Reserve from "./pages/Reserve"
+// import { UserContext } from "./utils/UserContext";
+// import ContextProvider from "./utils/ContextProvider";
 
 class App extends Component {
+
+  // <ContextProvider value={UserContext}>
+
   render() {
     return (
       <Router>

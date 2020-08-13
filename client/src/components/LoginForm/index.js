@@ -1,9 +1,12 @@
-import React, { Component } from "react";
-
+import React, { useState, useContext } from "react";
+// import { UserContext } from "../../utils/UserContext";
+// import ContextProvider from "../../utils/ContextProvider";
 
 function LoginForm(props) {
 
     return (
+
+
       <div className="base-container" ref={props.containerRef}>
         <div className="header">Login</div>
         <div className="content">
@@ -36,6 +39,8 @@ function LoginForm(props) {
             .then(response => response.json())
             .then(data => {
               console.log(data);
+              // ContextProvider.setID(data.id);
+              // console.log(ContextProvider);
               window.location = '/';
             })
 
@@ -43,7 +48,7 @@ function LoginForm(props) {
             Login
           </button>
         </div>
-      </div>
+        </div>
     );
 
 }
