@@ -5,15 +5,14 @@ import DateTimePicker from '../DateTimePicker';
 
 function SignupForm(props) {
 
-
-    console.log(props);
+    const submit = props.handleSubmit;
 
     return (
         <div className="wrapper">
 
         <div className="form-wrapper">
             <h1>Create Account</h1>
-            <form onSubmit={props.handleSubmit} noValidate>
+            <form noValidate>
                 <div className="username">
                     <label htmlFor="username">Username</label>
                     <input
@@ -85,10 +84,10 @@ function SignupForm(props) {
                         <span className="errorMessage">{props.password}</span>
                     )}
                 </div>
-                <DateTimePicker id="dtp" />
+                <DateTimePicker id="dtp" name="dob"/>
 
                 <div className="createAccount">
-                    <button type="submit">
+                    <button onClick={submit}>
                         Create Account
                     </button>
                 </div>

@@ -106,23 +106,19 @@ module.exports = function(app) {
   // otherwise send back an error
   app.post('/api/signup', function(req, res) {
 
-    console.log(req);
-
     let { username, password, email, name, dob } = req.body;
 
     username = username.trim();
     password = password.trim();
     email = email.trim();
     name = name.trim();
-    dob = dob.trim();
 
     db.Users.create({
       username: username,
       password: password,
       email: email,
       name: name,
-      // dob: dob
-      dob: new Date(Date.now()).toISOString()
+      dob: dob
     })
     .then(function() {
       res.json({"message": "success!"});
