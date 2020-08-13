@@ -46,6 +46,7 @@ const seed = async () => {
       business_name: "yestercades",
       category: "entertainment",
       city: "new york",
+      state: "New York",
       street: "123 sesame street",
       ownerId: 1
     },
@@ -53,12 +54,14 @@ const seed = async () => {
       business_name: "barber shop",
       category: "health/beauty",
       city: "new york",
+      state: "New York",
       street: "44 44th street",
       ownerId: 2
     },{
       business_name: "gym",
       category: "fitness",
       city: "new york",
+      state: "New York",
       street: "1 23rd street",
       ownerId: 3
     },
