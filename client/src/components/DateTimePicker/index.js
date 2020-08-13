@@ -8,6 +8,7 @@ function DateTimePicker(props) {
   return (
     <DatePicker
     id={props.id}
+    name={props.name}
     selected={startDate}
     onChange={date => setStartDate(date)}
     showTimeSelect
