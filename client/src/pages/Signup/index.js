@@ -56,7 +56,7 @@ class Signup extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               username: this.state.username,
-              name: '${this.state.firstName}  ${this.state.lastName}',
+              name: `${this.state.firstName}  ${this.state.lastName}`,
               email: this.state.email,
               password: this.state.password,
               dob: this.state.dob
@@ -64,7 +64,7 @@ class Signup extends Component {
           })
           .then(response => response.json())
           .then(data => data)
-          .then(window.location = '/');
+          // .then(window.location = '/');
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
