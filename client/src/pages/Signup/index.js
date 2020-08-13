@@ -39,14 +39,32 @@ class Signup extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
+        console.log('inside function');
+
         if (formValid(this.state)) {
             console.log(`
             --SUBMITTING--
+            ${this.state.username}
+            ${this.state.dob}
             First Name: ${this.state.firstName}
             Last Name: ${this.state.lastName}
             Email: ${this.state.email}
             Password: ${this.state.password}
         `);
+          fetch('/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: this.state.username,
+              name: '${this.state.firstName}  ${this.state.lastName}',
+              email: this.state.email,
+              password: this.state.password,
+              dob: this.state.dob
+            })
+          })
+          .then(response => response.json())
+          .then(data => data)
+          .then(window.location = '/');
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }

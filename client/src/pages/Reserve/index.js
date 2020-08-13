@@ -53,12 +53,12 @@ function Reserve(props) {
 
   } catch (e) {
     console.log(e);
-    // return (
-    //   <div>
-    //     <h2>Something went wrong!</h2>
-    //     <h4>Please go back and try again</h4>
-    //   </div>
-    // )
+    return (
+      <div>
+        <h2>Something went wrong!</h2>
+        <h4>Please go back and try again</h4>
+      </div>
+    )
 
   }
 
