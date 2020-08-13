@@ -34,7 +34,7 @@ function Business(props) {
       <h6>{businessState.category}</h6>
       <h6>{businessState.street}, {businessState.city}</h6>
       <div>{businessState.description}</div>
-      {entitiesState.map(entity => <Entity entity={entity} /> )}
+      {entitiesState.map(entity => <Entity key={entity.id} entity={entity} businessName={businessState.business_name}/> )}
 
     </div>
 

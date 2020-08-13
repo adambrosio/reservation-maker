@@ -25,6 +25,8 @@ function SearchForm() {
 
   return (
     <div>
+
+
       <form className="search">
         <div className="form-group">
 
@@ -34,7 +36,7 @@ function SearchForm() {
             <option value="">Select Category</option>
             <option value="entertainment">Entertainment</option>
             <option value="fitness">Fitness</option>
-            <option value="Resturaunt">Healt/Beauty</option>
+            <option value="Resturaunt">Health/Beauty</option>
             <option value="maintenance">Maintenance</option>
             <option value="miscellaneous">Miscellaneous</option>
           </select>
