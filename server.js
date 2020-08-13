@@ -2,7 +2,7 @@ const express = require("express");
 const session = require('express-session');
 const passport = require('./config/passport');
 const path = require("path");
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 const app = express();
 const seed = require('./db/seeds.js');
 
