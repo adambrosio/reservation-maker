@@ -9,6 +9,7 @@ import Search from './pages/Search';
 // import SearchResults from './pages/SearchResults';
 import 'foundation-sites/dist/css/foundation.min.css';
 import './App.css';
+import Reserve from "./pages/Reserve"
 
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/business/:id" component={Business} />
             <Route exact path="/search" component={Search} />
+            <Route exact path="/business/reserve/:id" component={Reserve} />
           </Switch>
         </div>
       </Router>

@@ -351,9 +351,8 @@ app.post('/api/business/:id/business_entity/:id/reserve', async function(req, re
   //   res.redirect('/');
   // } else {
 
-  // TODO: remove next 2 lines
-  req.body.time_start = new Date(Date.now()).toISOString();
-  req.body.time_end = new Date(Date.now()).toISOString();
+  console.log(req.body);
+
   try {
     res.json(await db.Reservation.create(req.body))
   }
