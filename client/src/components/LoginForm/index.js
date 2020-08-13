@@ -1,35 +1,56 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
+// import { UserContext } from "../../utils/UserContext";
+// import ContextProvider from "../../utils/ContextProvider";
 
+function LoginForm(props) {
 
-class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
     return (
-      <div className="base-container" ref={this.props.containerRef}>
+
+
+      <div className="base-container" ref={props.containerRef}>
         <div className="header">Login</div>
         <div className="content">
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Username</label>
-              <input type="text" name="username" placeholder="username" />
+              <input type="text" name="username" placeholder="username" id="username"/>
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input type="password" name="password" placeholder="password" />
+              <input type="password" name="password" placeholder="password" id="password"/>
             </div>
           </div>
         </div>
         <div className="footer">
-          <button type="button" className="btn">
+          <button type="button" className="btn" onClick={ e => {
+            e.preventDefault();
+            const formData = {
+              username: document.querySelector("#username").value,
+              password: document.querySelector("#password").value
+            }
+
+            console.log(formData);
+
+            fetch('/api/login', {
+              method: 'POST',
+              body: JSON.stringify(formData),
+              headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              // ContextProvider.setID(data.id);
+              // console.log(ContextProvider);
+              window.location = '/';
+            })
+
+          }}>
             Login
           </button>
         </div>
-      </div>
+        </div>
     );
-  }
+
 }
 
 export default LoginForm;

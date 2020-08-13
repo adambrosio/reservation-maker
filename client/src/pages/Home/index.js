@@ -4,11 +4,12 @@ import Footer from "../../components/Footer"
 import Jumbotron from "../../components/Jumbotron"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "../../components/homeTest.css";
 
 function Home(props){
     return(
         <div className="container">
-            <Navbar accountName = {props.accountName}/>
+            {/* <Navbar accountName = {props.accountName}/> */}
             <Jumbotron/>
             <Footer/>
         </div>
