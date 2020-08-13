@@ -3,10 +3,13 @@ import "../../components/loginTest.css"
 import LoginForm from "../../components/LoginForm";
 
 class Login extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            isLogginActive: true
+            isLogginActive: true,
+            username: null,
+            password: null
         };
     }
 
@@ -36,7 +39,7 @@ class Login extends Component {
             <div className="login">
                 <div className="container" ref={ref => (this.container = ref)}>
                     {isLogginActive && (
-                        <LoginForm containerRef={ref => (this.current = ref)} />
+                        <LoginForm state={this.state} handleSubmit={this.handleSubmit} containerRef={ref => (this.current = ref)} />
                     )}
                 </div>
                 <RightSide

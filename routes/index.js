@@ -11,6 +11,7 @@ module.exports = function(app) {
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
   app.post('/api/login', passport.authenticate('local'), function(req, res) {
+    console.log(req.body);
     // user logged in
     // TODO send all user data to front end, store in context api
     // include user data, reservations, owned/admined businessess

@@ -64,7 +64,7 @@ class Signup extends Component {
             })
                 .then(response => response.json())
                 .then(data => data)
-            // .then(window.location = '/');
+                .then(window.location = '/');
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
