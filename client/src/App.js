@@ -6,11 +6,9 @@ import Signup from "./pages/Signup";
 import Profile from './pages/Profile';
 import Business from './pages/Business';
 import Search from './pages/Search';
-// import SearchResults from './pages/SearchResults';
 import 'foundation-sites/dist/css/foundation.min.css';
 import './App.css';
 import Reserve from "./pages/Reserve"
-
 
 class App extends Component {
   render() {

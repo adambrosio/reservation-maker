@@ -106,6 +106,8 @@ module.exports = function(app) {
   // otherwise send back an error
   app.post('/api/signup', function(req, res) {
 
+    console.log(req);
+
     let { username, password, email, name, dob } = req.body;
 
     username = username.trim();
