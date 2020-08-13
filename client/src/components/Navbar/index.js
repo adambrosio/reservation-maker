@@ -17,9 +17,15 @@ function Navbar(props) {
           <Link to="/home">
             Home
           </Link>
-          <label className="search">
+          <Link to="/business">
+            Business
+          </Link>
+          <Link to="/search">
+            Search
+          </Link>
+          {/* <label className="search">
             <textarea placeholder="Search for Business..."></textarea>
-          </label>
+          </label> */}
         </Menu>
 
       </TopBarLeft>
@@ -28,6 +34,12 @@ function Navbar(props) {
         <Menu className='menuRight'>
           <Link to="/signup">
             Signup/Login
+          </Link>
+          <Link to="/create-business">
+            Create Business
+          </Link>
+          <Link to="/profile">
+            Profile
           </Link>
           <MenuItem isActive><a>{props.accountName}</a></MenuItem>
         </Menu>

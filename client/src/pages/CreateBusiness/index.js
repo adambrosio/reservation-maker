@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import SignupForm from "../../components/SignupForm";
+import BusinessForm from "../../components/BusinessForm";
 import "../../components/signupTest.css";
 
-const emailRegex = RegExp(
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
 
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
@@ -22,17 +19,21 @@ const formValid = ({ formErrors, ...rest }) => {
     return valid;
 };
 
-class Signup extends Component {
+class CreateBusiness extends Component {
     state = {
-        firstName: null,
-        lastName: null,
-        email: null,
-        password: null,
+        business_name: null,
+        category: {
+            value: "entertainment"
+        },
+        city: null,
+        state: null,
+        street: null,
         formErrors: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: ""
+            business_name: "",
+            category: "",
+            city: "",
+            street: "",
+            state: ""
         }
     };
 
@@ -44,22 +45,21 @@ class Signup extends Component {
         if (formValid(this.state)) {
             console.log(`
             --SUBMITTING--
-            ${this.state.username}
-            ${this.state.dob}
-            First Name: ${this.state.firstName}
-            Last Name: ${this.state.lastName}
-            Email: ${this.state.email}
-            Password: ${this.state.password}
+            Business Name: ${this.state.business_name}
+            Category: ${this.state.category}
+            City: ${this.state.city}
+            State: ${this.state.state}
+            Street: ${this.state.street}
         `);
-            fetch('/api/signup', {
+            fetch('/api/business', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    username: this.state.username,
-                    name: `${this.state.firstName}  ${this.state.lastName}`,
-                    email: this.state.email,
-                    password: this.state.password,
-                    dob: this.state.dob
+                    business_name: this.state.business_name,
+                    category: this.state.category,
+                    city: this.state.city,
+                    state: this.state.state,
+                    street: this.state.street
                 })
             })
                 .then(response => response.json())
@@ -76,21 +76,20 @@ class Signup extends Component {
         let formErrors = { ...this.state.formErrors };
 
         switch (name) {
-            case "firstName":
-                formErrors.firstName =
+            case "business_name":
+                formErrors.business_name =
                     value.length < 3 ? "minimum 3 characaters required" : "";
                 break;
-            case "lastName":
-                formErrors.lastName =
+            case "category":
+                formErrors.category =
+                    value.length < 3 ? "must choose a category" : "";
+                break;
+            case "city":
+                formErrors.city =
                     value.length < 3 ? "minimum 3 characaters required" : "";
                 break;
-            case "email":
-                formErrors.email = emailRegex.test(value)
-                    ? ""
-                    : "invalid email address";
-                break;
-            case "password":
-                formErrors.password =
+            case "street":
+                formErrors.street =
                     value.length < 6 ? "minimum 6 characaters required" : "";
                 break;
             default:
@@ -100,19 +99,24 @@ class Signup extends Component {
         this.setState({ formErrors, [name]: value }, () => console.log(this.state));
     };
 
+    handleDropdownChange = e => {
+        this.setState({ value: e.target.value });
+    }
+
     render() {
         return (
             <div>
-                <SignupForm
+                <BusinessForm
                     handleChange={this.handleChange}
+                    handleDropdownChange={this.handleDropdownChange}
                     handleSubmit={this.handleSubmit}
-                    firstName={this.state.formErrors.firstName}
-                    lastName={this.state.formErrors.lastName}
-                    email={this.state.formErrors.email}
-                    password={this.state.formErrors.password}
+                    business_name={this.state.formErrors.business_name}
+                    category={this.state.formErrors.category}
+                    city={this.state.formErrors.city}
+                    street={this.state.formErrors.street}
                 />
             </div>
         );
     }
 }
-export default Signup;
+export default CreateBusiness;
