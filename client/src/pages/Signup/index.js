@@ -51,20 +51,20 @@ class Signup extends Component {
             Email: ${this.state.email}
             Password: ${this.state.password}
         `);
-          fetch('/api/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              username: this.state.username,
-              name: `${this.state.firstName}  ${this.state.lastName}`,
-              email: this.state.email,
-              password: this.state.password,
-              dob: this.state.dob
+            fetch('/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: this.state.username,
+                    name: `${this.state.firstName}  ${this.state.lastName}`,
+                    email: this.state.email,
+                    password: this.state.password,
+                    dob: this.state.dob
+                })
             })
-          })
-          .then(response => response.json())
-          .then(data => data)
-          // .then(window.location = '/');
+                .then(response => response.json())
+                .then(data => data)
+            // .then(window.location = '/');
         } else {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }

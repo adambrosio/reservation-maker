@@ -1,46 +1,52 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import DropdownState from "../DropdownState";
 import "../../App.css";
 
 function BusinessForm(props) {
+    const submit = props.handleSubmit;
+
     return (
         <div className="wrapper">
             <div className="form-wrapper">
                 <h1>Create Business</h1>
                 <form onSubmit={props.handleSubmit} noValidate>
-                    <div className="businessName">
-                        <label htmlFor="businessName">Name of Business</label>
+                    <div className="business_name">
+                        <label htmlFor="business_name">
+                            Name of Business
+                        </label>
                         <input
-                            className={props.businessName.length > 0 ? "error" : null}
+                            className={props.business_name.length > 0 ? "error" : null}
                             placeholder="Business Name"
                             type="text"
-                            name="businessName"
+                            name="business_name"
                             noValidate
                             onChange={props.handleChange}
                         />
-                        {props.businessName.length > 0 && (
-                            <span className="errorMessage">{props.businessName}</span>
+                        {props.business_name.length > 0 && (
+                            <span className="errorMessage">{props.business_name}</span>
                         )}
                     </div>
-                    <div className="address">
-                        <label htmlFor="address">Address</label>
-                        <input
-                            className={props.address.length > 0 ? "error" : null}
-                            placeholder="Address"
-                            type="text"
-                            name="address"
-                            noValidate
-                            onChange={props.handleChange}
-                        />
-                        {props.address.length > 0 && (
-                            <span className="errorMessage">{props.address}</span>
-                        )}
+                    <div className="category">
+                        <label>
+                            Choose a Category:
+                            <select value={props.category.value} onChange={props.handleDropChange}>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="health/beauty">Health/Beauty</option>
+                                <option value="maintenance">Maintenance</option>
+                                <option value="miscellaneous">Miscellaneous</option>
+                            </select>
+                        </label>
                     </div>
                     <div className="city">
-                        <label htmlFor="city">City</label>
+                        <label htmlFor="city">
+                            City
+                        </label>
                         <input
                             className={props.city.length > 0 ? "error" : null}
-                            placeholder="ECity"
+                            placeholder="City"
                             type="text"
                             name="city"
                             noValidate
@@ -50,29 +56,25 @@ function BusinessForm(props) {
                             <span className="errorMessage">{props.city}</span>
                         )}
                     </div>
-                    <div className="description">
-                        <label htmlFor="description">Description</label>
-                        <textarea
-                            className={props.description.length > 0 ? "error" : null}
-                            placeholder="Description"
+                    <DropdownState/>
+                    <div className="street">
+                        <label htmlFor="street">Street</label>
+                        <input
+                            className={props.street.length > 0 ? "error" : null}
+                            placeholder="Street"
                             type="text"
-                            name="description"
+                            name="street"
                             noValidate
                             onChange={props.handleChange}
                         />
-                        {props.description.length > 0 && (
-                            <span className="errorMessage">{props.description}</span>
+                        {props.street.length > 0 && (
+                            <span className="errorMessage">{props.street}</span>
                         )}
                     </div>
-                    <div className="createAccount">
-                        <Link to="/home">
-                            Create Account
-                        </Link>
-                    </div>
-                    <div className="login">
-                        <Link to="/login">
-                            Already Have an Account?
-                        </Link>
+                    <div className="createBusiness">
+                        <button onClick={submit}>
+                            Create Business
+                        </button>
                     </div>
                 </form>
             </div>
@@ -80,4 +82,4 @@ function BusinessForm(props) {
     );
 }
 
-export default SignupForm;
+export default BusinessForm;
