@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -30,7 +30,9 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/business/:id" component={Business} />
-            <Route exact path="/business/" component={Business} />
+            <Route exact path="/business/">
+              <Redirect to="/search" />
+            </Route>
             <Route exact path="/create-business" component={CreateBusiness} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/business/reserve/:id" component={Reserve} />

@@ -21,9 +21,9 @@ function Navbar(props) {
           <Link to="/home">
             Home
           </Link>
-          <Link to="/business">
+          {/*<Link to="/business">
             Business
-          </Link>
+          </Link>*/}
           <Link to="/search">
             Search
           </Link>
