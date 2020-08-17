@@ -186,7 +186,7 @@ module.exports = function(app) {
       attributes: ['id', 'business_name', 'category', 'street', 'city', 'description', 'ownerId'],
       where: { id : req.params.id }
     });
-    business.userIsAdmin = false;
+    // business.userIsAdmin = false;
     if(req.user) {
       const admin = await db.BusinessAdmins.findAll({
         where: {
