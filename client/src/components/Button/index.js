@@ -4,7 +4,7 @@ import React from "react";
 function SubmitBtn(props) {
     return (
         <div className  = "btn">
-            <a className={props.button} id = "submit-btn" href="#">{props.name}</a>
+            <a className={props.button} id = "submit-btn">{props.name}</a>
         </div>
     );
 }

@@ -62,6 +62,9 @@ function SearchForm() {
           </button>
         </div>
       </form>
+      <div className="row text-center" style={{ 'marginTop': '2%', 'marginBottom': '2%' }}>
+      <h2>Businesses that match your search:</h2>
+      </div>
 
       <SearchResults results={searchState} />
     </div>
