@@ -10,12 +10,13 @@ class DropdownCategory extends Component {
     handleSubmit =e => {
         e.preventDefault();
         if (this.state.value != null) {
-            
+
         }
     }
-    
+
     handleChange = event => {
-        this.setState({ value: event.target.value });
+        console.log(event.target.value);
+        this.setState = ({ value: event.target.value });
     };
 
     render() {
@@ -34,7 +35,7 @@ class DropdownCategory extends Component {
                 </label>
                 <input type="submit" value="Submit" />
             </div>
-            
+
 
         );
     }

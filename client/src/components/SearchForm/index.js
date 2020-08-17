@@ -27,12 +27,12 @@ function SearchForm() {
     <div>
 
 
-      <form className="search">
-        <div className="form-group">
+      <form className="search" style={{ 'width': '90%'}}>
+        <div className="form-group grid-x" style={{ 'width': '100%'}}>
 
-          <input name="business_name" type="input" placeholder="Business Name" id="business_name" />
+          <input name="business_name" type="input" placeholder="Business Name" id="business_name" className="cell small-12 medium-4"/>
 
-          <select name="category" id="category">
+          <select name="category" id="category" className="cell small-12 medium-4">
             <option value="">Select Category</option>
             <option value="entertainment">Entertainment</option>
             <option value="fitness">Fitness</option>
@@ -41,9 +41,9 @@ function SearchForm() {
             <option value="miscellaneous">Miscellaneous</option>
           </select>
 
-          <input name="city" className="" placeholder="City" id="city" />
+          <input name="city" className="" placeholder="City" id="city" className="cell small-12 medium-4" />
 
-          <button type="submit" className="btn btn-success"
+          <button type="submit" className="button"
           onClick={ e => {
             e.preventDefault();
 
@@ -62,6 +62,9 @@ function SearchForm() {
           </button>
         </div>
       </form>
+      <div className="row text-center" style={{ 'marginTop': '2%', 'marginBottom': '2%' }}>
+      <h2>Businesses that match your search:</h2>
+      </div>
 
       <SearchResults results={searchState} />
     </div>

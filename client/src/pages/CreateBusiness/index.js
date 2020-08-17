@@ -26,7 +26,9 @@ class CreateBusiness extends Component {
             value: "entertainment"
         },
         city: null,
-        state: null,
+        state: {
+          value: null
+        },
         street: null,
         formErrors: {
             business_name: "",
@@ -56,7 +58,7 @@ class CreateBusiness extends Component {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     business_name: this.state.business_name,
-                    category: this.state.category,
+                    category: this.state.category.value,
                     city: this.state.city,
                     state: this.state.state,
                     street: this.state.street
@@ -114,6 +116,7 @@ class CreateBusiness extends Component {
                     category={this.state.formErrors.category}
                     city={this.state.formErrors.city}
                     street={this.state.formErrors.street}
+                    state={this.state.state}
                 />
             </div>
         );
